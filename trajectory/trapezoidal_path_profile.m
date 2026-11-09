@@ -1,5 +1,5 @@
-function [s, sdot ,sdotdot] = s_trap(pi,pf,t1,t2,tf,is_circ,is_via,rho,alpha,delta)
-% Generate a trapezoidal path profile sampled every millisecond.
+function [s, sdot ,sdotdot] = trapezoidal_path_profile(pi,pf,t1,t2,tf,is_circ,is_via,rho,alpha,delta)
+% Return position, speed, and acceleration along one path segment at 1 ms intervals.
 
 si=0;
 dt=t2-t1;
@@ -15,7 +15,6 @@ s = zeros(1,length(num));
 sdot = zeros(1,length(num));
 sdotdot = zeros(1,length(num));
 
-% Use arc length for circular segments.
 if is_circ == 1
     sf=alpha*rho;
 else
@@ -46,7 +45,7 @@ ta=0:0.001:t1;
 tb=t1+0.001:0.001:t2;
 tc=t2+0.001:0.001:tf;
 
-% Shift the segment timing when blending through a via point.
+% Start the segment early by delta seconds to blend through a via point.
 if is_via == 0
     s(1:length(ta))=0;
     s(length(ta)+1:length(ta)+length(tb)+1)=s_primo;

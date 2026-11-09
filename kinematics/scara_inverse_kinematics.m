@@ -1,5 +1,5 @@
-function q_solutions = calcola_cin_inv_scara(x_d)
-% Compute joint solutions for a desired pose [x; y; z; phi].
+function q_solutions = scara_inverse_kinematics(x_d)
+% Return one row per elbow configuration for the pose [x; y; z; phi].
 
     a1 = 0.5;
     a2 = 0.5;
@@ -14,7 +14,7 @@ function q_solutions = calcola_cin_inv_scara(x_d)
 
     cos_q2 = (px^2 + py^2 - a1^2 - a2^2) / (2 * a1 * a2);
 
-    % Return an empty array for an unreachable planar position.
+    % No solution outside the planar workspace.
     if abs(cos_q2) > 1
         q_solutions = [];
         return;
@@ -22,7 +22,6 @@ function q_solutions = calcola_cin_inv_scara(x_d)
 
     sin_q2_pos = sqrt(1 - cos_q2^2);
 
-    % Evaluate both elbow configurations.
     q2_sol = [atan2(sin_q2_pos, cos_q2);
               atan2(-sin_q2_pos, cos_q2)];
 
@@ -31,7 +30,7 @@ function q_solutions = calcola_cin_inv_scara(x_d)
 
         den = px^2 + py^2;
         if den < 1e-12
-            q1 = 0; % Use a fixed shoulder angle at the singular origin.
+            q1 = 0; % At the folded origin, any shoulder angle gives the same planar position.
         else
             s1 = ((a1 + a2*cos(q2))*py - a2*sin(q2)*px) / den;
             c1 = ((a1 + a2*cos(q2))*px + a2*sin(q2)*py) / den;

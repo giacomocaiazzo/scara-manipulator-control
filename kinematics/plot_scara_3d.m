@@ -1,5 +1,5 @@
-function scara_robot_plot_3D(theta1, theta2, d3, theta4,P)
-% Draw the SCARA configuration and reference path in 3D.
+function plot_scara_3d(theta1, theta2, d3, theta4,P)
+% Plot the robot and its reference path for one joint configuration.
 theta1=theta1*180/pi;
 theta2=theta2*180/pi;
 theta4=theta4*180/pi;
@@ -27,7 +27,6 @@ theta4=theta4*180/pi;
           0,             0,            1, 0;
           0,             0,            0, 1];
 
- % Compose the joint transforms.
     T = T1 * T2 * T3 * T4;
 
     base = [0, 0, d1];
@@ -44,7 +43,6 @@ theta4=theta4*180/pi;
     hold on;
     view(3);
 
-    % Draw the links from their joint positions.
     plot3([0, base(1)], [0, base(2)], [0, base(3)], 'c', 'LineWidth', 20);
     plot3([base(1), link1_end(1)], [base(2), link1_end(2)], [base(3), link1_end(3)], 'c', 'LineWidth', 10);
     plot3([link1_end(1), link2_end(1)], [link1_end(2), link2_end(2)], [link1_end(3), link2_end(3)], 'c', 'LineWidth', 10);
