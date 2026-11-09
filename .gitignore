@@ -1,0 +1,8 @@
+/archive/
+slprj/
+hdl_prj/
+hdlsrc/
+*.asv
+*.autosave
+*.slxc
+*.slx.r20*
